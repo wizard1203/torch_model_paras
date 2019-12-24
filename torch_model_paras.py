@@ -45,6 +45,8 @@ def train(args, model, device, train_loader, optimizer, epoch):
         print("-------------------\n")
         model_and_grad = {}
         for name, parameter in model.named_parameters():
+            print("..........look %s parameter..........\n"%(name))
+            print(parameter)
             print("..........look %s parameter.data..........\n"%(name))
             print(parameter.data)
             print("..........look %s parameter.grad..........\n"%(name))
