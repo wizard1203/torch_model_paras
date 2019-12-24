@@ -32,7 +32,27 @@ def train(args, model, device, train_loader, optimizer, epoch):
         output = model(data)
         loss = F.nll_loss(output, target)
         loss.backward()
+         # Print model's state_dict
+        print("Model's state_dict:\n")
+        one_param_tensor = None
+        for param_tensor in model.state_dict():
+            print(param_tensor, "\t", model.state_dict()[param_tensor].size())
+            one_param_tensor = param_tensor
+        print(one_param_tensor)
+
+        model_and_grad = {}
+        for name, parameter in model.named_parameters():
+            model_and_grad[name] = parameter.data
+            model_and_grad[name+b'_gradient'] = parameter.grad
+
+        print("==============================\nModel's named_parameters:\n")
+        print(model.named_parameters())
+        print("==============================\nmodel_and_grad (copy):\n")
+        print(model_and_grad)
+
         optimizer.step()
+
+        break
         if batch_idx % args.log_interval == 0:
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, batch_idx * len(data), len(train_loader.dataset),
@@ -103,20 +123,7 @@ def main():
     for epoch in range(1, args.epochs + 1):
         train(args, model, device, train_loader, optimizer, epoch)
 
-         # Print model's state_dict
-        print("Model's state_dict:\n")
-        for param_tensor in model.state_dict():
-            print(param_tensor, "\t", model.state_dict()[param_tensor].size())
 
-        model_and_grad = {}
-        for name, parameter in model.named_parameters():
-            model_and_grad[name] = parameter.data
-            model_and_grad[name+b'_gradient'] = parameter.grad
-
-        print("==============================\nModel's named_parameters:\n")
-        print(model.named_parameters())
-        print("==============================\nmodel_and_grad (copy):\n")
-        print(model_and_grad)
 
         # # Print optimizer's state_dict
         # print("Optimizer's state_dict:")
