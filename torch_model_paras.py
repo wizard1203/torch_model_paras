@@ -42,12 +42,14 @@ def train(args, model, device, train_loader, optimizer, epoch):
         own_state = model.state_dict()
         print("==============================\nModel's state_dict():\n")
         print(own_state)
-
+        print("-------------------\n")
         model_and_grad = {}
         for name, parameter in model.named_parameters():
+            print("..........look parameter..........\n")
+            print(parameter)
             model_and_grad[name] = parameter.data
             model_and_grad[name+b'_gradient'] = parameter.grad
-
+        print("-------------------\n")
         print("==============================\nModel's named_parameters:\n")
         print(model.named_parameters())
         print("==============================\nmodel_and_grad (copy):\n")
