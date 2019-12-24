@@ -39,6 +39,9 @@ def train(args, model, device, train_loader, optimizer, epoch):
             print(param_tensor, "\t", model.state_dict()[param_tensor].size())
             one_param_tensor = param_tensor
         print(one_param_tensor)
+        own_state = model.state_dict()
+        print("==============================\nModel's state_dict():\n")
+        print(own_state)
 
         model_and_grad = {}
         for name, parameter in model.named_parameters():
